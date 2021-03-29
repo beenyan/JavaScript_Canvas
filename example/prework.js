@@ -8,6 +8,11 @@ let translate = function () {
     else
         ctx.translate(...arguments);
 }
+let transform = function () {
+    arguments = [...arguments];
+    while (arguments.length < 6) arguments.push(0);
+    ctx.transform(...arguments);
+}
 let fill = function () {
     if (arguments.length === 0)
         ctx.fill();
@@ -74,6 +79,25 @@ let GCP = str => { // globalCompositeOperation
 let lineCap = str => {
     ctx.lineCap = str;
 }
+let filltext = (text, x = 0, y = 0, maxWidth) => {
+    ctx.fillText(text, x, y, maxWidth);
+}
+let stroketext = (text, x = 0, y = 0, maxWidth) => {
+    ctx.strokeText(text, x, y, maxWidth);
+}
+let font = str => {
+    ctx.font = str;
+}
+let textAlign = (str = 'center') => {
+    ctx.textAlign = str;
+}
+let textBaseline = (str = 'middle') => {
+    ctx.textBaseline = str;
+}
+let scale = (x = 1, y = 1) => {
+    ctx.scale(x, y);
+}
+
 
 function rand(min, max) {
     return Math.floor(Math.random() * (max - min + 1)) + min;
