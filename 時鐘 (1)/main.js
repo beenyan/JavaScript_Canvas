@@ -36,7 +36,6 @@ function draw() {
             stroke();
         }
     })
-    stars.forEach(e => e.draw());
     save(() => { // 點鐘
         const Angle = 360 / 12;
         const r = size * 0.75;
@@ -104,21 +103,6 @@ function draw() {
         close();
     })
     ++times;
-    // 左上方行時鐘
-    save(() => {
-        const margin = size * 0.2;
-        translate(-ww / 2 + margin, -wh / 2 + margin);
-        const squareSize = { // 大小
-            x: size * 1.6,
-            y: size * 0.8
-        }
-        fill('#10151d');
-        fill(0, 0, squareSize.x, squareSize.y);
-        shadow(size * 0.01, 'aqua');
-        lineW(size * 0.01);
-        stroke('#00adb5');
-        stroke(0, 0, squareSize.x, squareSize.y);
-    });
     requestAnimationFrame(draw);
 }
 function update() {
@@ -147,52 +131,3 @@ function WC() {
     size = Math.min(ww, wh) * 0.3;
 } WC();
 window.onresize = WC;
-class Star {
-    constructor() {
-        Object.assign(this, {
-            pos: {
-                distance: rand(10, 80) / 100,
-                rotate: rand(0, 360)
-            },
-            rotate: rand(0, 360),
-            size: rand(2, 4) / 100,
-            color: `rgba(${rand(220, 255)}, ${rand(220, 255)}, 200, ${rand(60, 80) / 100})`,
-            shadowWidth: rand(5, 10),
-            updateCount: rand(10, 200),
-            vary: rand(1, 3) / 10000,
-            stop: -rand(5, 20),
-        });
-    }
-    update() {
-        if (this.size <= 0) {
-            stars[stars.indexOf(this)] = new Star();
-        } else if (--this.updateCount <= this.stop) {
-            this.size -= this.vary * 1.5;
-        } else if (this.updateCount >= 0) {
-            this.size += this.vary;
-        }
-    }
-    draw() {
-        this.update();
-        const pos = loca(size * this.pos.distance, this.pos.rotate);
-        save(() => {
-            begin();
-            translate(pos.x, pos.y);
-            rotate(this.rotate);
-            moveTo(0, 0);
-            for (let i = 0; i < 9; ++i) {
-                translate(this.size * size, 0);
-                lineTo(0, 0);
-                rotate(i % 2 ? 144 : -72);
-            }
-            close();
-            shadow(this.shadowWidth, this.color);
-            fill(this.color);
-            fill();
-        });
-    }
-}
-let stars = [];
-while (stars.length < 20) {
-    stars.push(new Star());
-}
