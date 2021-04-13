@@ -4,7 +4,7 @@ const ctx = canvas.getContext('2d');
 
 let translate = function () {
     if (arguments.length === 1)
-        ctx.translate(arguments.x, arguments.y);
+        ctx.translate(arguments[0].x, arguments[0].y);
     else
         ctx.translate(...arguments);
 }
@@ -45,13 +45,13 @@ let shadow = (width, color, offx = 0, offy = 0) => {
 }
 let moveTo = function () {
     if (arguments.length === 1)
-        ctx.moveTo(arguments.x, arguments.y);
+        ctx.moveTo(arguments[0].x, arguments[0].y);
     else
         ctx.moveTo(...arguments);
 }
 let lineTo = function () {
     if (arguments.length === 1)
-        ctx.lineTo(arguments.x, arguments.y);
+        ctx.lineTo(arguments[0].x, arguments[0].y);
     else
         ctx.lineTo(...arguments);
 }
@@ -72,6 +72,9 @@ let clearRect = function () {
         ctx.clearRect(...arguments);
     else
         ctx.clearRect(-ww, -wh, ww * 2, wh * 2);
+}
+let deepcopy = json => {
+    return JSON.parse(JSON.stringify(json));
 }
 let GCP = str => { // globalCompositeOperation
     ctx.globalCompositeOperation = str;
@@ -106,12 +109,3 @@ function rand(min, max) {
 const ATP = angle => { // angel to pi
     return Math.PI / 180 * angle;
 }
-let ww, wh;
-function WC() {
-    ww = window.innerWidth;
-    wh = window.innerHeight;
-    canvas.width = ww;
-    canvas.height = wh;
-    translate(ww / 2, wh / 2);
-} WC();
-window.onresize = WC;
