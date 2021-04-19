@@ -1,4 +1,47 @@
 /** @type {HTMLCanvasElement} */
+class Vector {
+    static add(v1, v2 = v1) {
+        const Integer = Number(v2) === v2;
+        return {
+            x: v1.x + (Integer ? v2 : v2.x),
+            y: v1.y + (Integer ? v2 : v2.y)
+        }
+    }
+    static set(x = 0, y = x) {
+        return { x, y };
+    }
+    static mul(v1, v2 = v1) {
+        const Integer = Number(v2) === v2;
+        return {
+            x: v1.x * (Integer ? v2 : v2.x),
+            y: v1.y * (Integer ? v2 : v2.y)
+        }
+    }
+    static transform(v) {
+        if (v.x > 0) return 'right';
+        else if (v.x < 0) return 'left';
+        else if (v.y > 0) return 'down';
+        else if (v.y < 0) return 'up';
+        else if (v === 'right') return Vector.set(1, 0);
+        else if (v === 'left') return Vector.set(-1, 0);
+        else if (v === 'down') return Vector.set(0, 1);
+        else if (v === 'up') return Vector.set(0, -1);
+        else return null;
+    }
+    static reverse(dir) {
+        if (dir === 'right') return 'left';
+        else if (dir === 'left') return 'right';
+        else if (dir === 'down') return 'up';
+        else if (dir === 'up') return 'down';
+        else return null;
+    }
+    static swap(v) {
+        return {
+            x: v.y,
+            y: v.x
+        }
+    }
+}
 const canvas = document.getElementById('canvas');
 const ctx = canvas.getContext('2d');
 
