@@ -7,8 +7,18 @@ class Vector {
             y: v1.y + (Integer ? v2 : v2.y)
         }
     }
+    static minus(v1, v2 = v1) {
+        const Integer = Number(v2) === v2;
+        return {
+            x: v1.x - (Integer ? v2 : v2.x),
+            y: v1.y - (Integer ? v2 : v2.y)
+        }
+    }
     static set(x = 0, y = x) {
         return { x, y };
+    }
+    static equal(v1, v2) {
+        return v1.x === v2.x && v1.y === v2.y;
     }
     static mul(v1, v2 = v1) {
         const Integer = Number(v2) === v2;
@@ -18,22 +28,26 @@ class Vector {
         }
     }
     static transform(v) {
+        const Direct = {
+            right: Vector.set(1, 0),
+            left: Vector.set(-1, 0),
+            down: Vector.set(0, 1),
+            up: Vector.set(0, -1),
+        }
         if (v.x > 0) return 'right';
         else if (v.x < 0) return 'left';
         else if (v.y > 0) return 'down';
         else if (v.y < 0) return 'up';
-        else if (v === 'right') return Vector.set(1, 0);
-        else if (v === 'left') return Vector.set(-1, 0);
-        else if (v === 'down') return Vector.set(0, 1);
-        else if (v === 'up') return Vector.set(0, -1);
-        else return null;
+        else return Direct[v];
     }
     static reverse(dir) {
-        if (dir === 'right') return 'left';
-        else if (dir === 'left') return 'right';
-        else if (dir === 'down') return 'up';
-        else if (dir === 'up') return 'down';
-        else return null;
+        const Direct = {
+            right: 'left',
+            left: 'right',
+            down: 'up',
+            up: 'down',
+        }
+        return Direct[dir];
     }
     static swap(v) {
         return {
@@ -124,6 +138,9 @@ let GCP = str => { // globalCompositeOperation
 }
 let lineCap = str => {
     ctx.lineCap = str;
+}
+let lineJoin = str => {
+    ctx.lineJoin = str;
 }
 let filltext = (text, x = 0, y = 0, maxWidth) => {
     ctx.fillText(text, x, y, maxWidth);
