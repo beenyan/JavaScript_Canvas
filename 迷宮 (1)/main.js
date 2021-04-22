@@ -156,6 +156,8 @@ class Square {
         })
     }
 }
+let darker = false;
+let lineDraw = true;
 class Map {
     constructor(args) {
         let def = {
@@ -196,11 +198,11 @@ class Map {
         }));
     }
     find() {
-        if (this.head.x === block.count.x - 1 && this.head.y === block.count.y - 1) {
+        if (darker) {
             fill('#10101005');
             fill(0, 0, ww, wh);
             return;
-        } else { // find line
+        } else if (lineDraw) { // find line
             this.get().find();
             if (this.head.x === block.count.x - 1 && this.head.y === block.count.y - 1) {
                 save(() => {
@@ -210,7 +212,9 @@ class Map {
                     arc(0, 0, block.size.x / 4);
                     fill();
                 })
-                setTimeout(init, 2000);
+                lineDraw = false;
+                setTimeout(() => darker = true, 1000);
+                setTimeout(init, 3000);
             }
         }
     }
@@ -282,6 +286,8 @@ function init() {
     fill('#181818');
     fill(0, 0, ww, wh);
     map = new Map();
+    lineDraw = true;
+    darker = false;
 }
 let ww, wh;
 let map;
@@ -298,11 +304,3 @@ const FPS = 1000 / 60;
 for (let i = 1; i <= 1; ++i) {
     setInterval(update, FPS);
 }
-let step = 500;
-addEventListener('keydown', key => {
-    if (key.key === 'ArrowRight') {
-        for (let i = 0; i < step; ++i) {
-            update();
-        }
-    }
-})
