@@ -8,7 +8,7 @@ class Square {
             isEnd: false,
             wall: {
                 right: true, down: true,
-                up: true, left: true
+                left: true, up: true
             },
             stroke: {
                 color: '#303030',
@@ -161,7 +161,7 @@ let lineDraw = true;
 class Map {
     constructor(args) {
         let def = {
-            minSize: 30,
+            minSize: 60,
             head: Vector.set(),
             move: [
                 Vector.set(0, -1), Vector.set(0, 1), // up down
