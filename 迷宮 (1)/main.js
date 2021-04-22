@@ -11,11 +11,11 @@ class Square {
                 left: true, up: true
             },
             stroke: {
-                color: '#303030',
+                color: '#202020',
                 width: block.size.x * 0.05
             },
             drawed: {
-                color: '#505050'
+                color: '#404040'
             },
             found: {
                 lineW: 10,
@@ -161,7 +161,7 @@ let lineDraw = true;
 class Map {
     constructor(args) {
         let def = {
-            minSize: 60,
+            minSize: 30,
             head: Vector.set(),
             move: [
                 Vector.set(0, -1), Vector.set(0, 1), // up down
